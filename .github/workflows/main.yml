@@ -17,7 +17,9 @@ jobs:
           sgdisk -n 0:0:+512M -t 0:ef00 -c 0:KIWI_BOOT -n 0:0:0 -t 0:8304 -c KIWI_ROOT kiwi-host.img
           sudo losetup -f -P kiwi-host.img
           sudo partprobe
+          until test -e /dev/disk/by-partlabel/KIWI_BOOT; do :; done
           sudo mkfs.vfat -F32 -n KIWI_BOOT /dev/disk/by-partlabel/KIWI_BOOT
+          until test -e /dev/disk/by-partlabel/KIWI_ROOT; do :; done
           sudo mkfs.xfs -L KIWI_ROOT /dev/disk/by-partlabel/KIWI_ROOT
           sudo mount LABEL=KIWI_ROOT /mnt
           sudo mkdir /mnt/boot
