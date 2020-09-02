@@ -1,14 +1,14 @@
 #!/bin/bash
 
-declare sd () {
+function sd () {
     systemd-nspawn -D /mnt -- "$@"
 }
 
-declare sd-apt-get () {
+function sd-apt-get () {
     sd /usr/bin/apt-get -y "$@"
 }
 
-declare sd-bootctl () {
+function sd-bootctl () {
     sd /usr/bin/bootctl "$@"
 }
 
