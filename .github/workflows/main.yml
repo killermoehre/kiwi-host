@@ -1,0 +1,35 @@
+name: Build Image
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Install dependencies
+        run: sudo apt-get -y install cdebootstrap systemd-container
+      - name: Create Image
+        run: |
+          fallocate -l 5GiB kiwi-host.img
+          sgdisk -n 0:0:+512M -t 0:ef00 -c 0:KIWI_BOOT -n 0:0:0 -t 0:8304 -c KIWI_ROOT kiwi-host.img
+          sudo losetup -f -P kiwi-host.img
+          sudo mkfs.vfat -F32 -n KIWI_BOOT /dev/disk/by-partlabel/KIWI_BOOT
+          sudo mkfs.xfs -L KIWI_ROOT /dev/disk/by-partlabel/KIWI_ROOT
+          sudo mount LABEL=KIWI_ROOT /mnt
+          sudo mkdir /mnt/boot
+          sudo mount LABEL=KIWI_BOOT /mnt/boot
+          sudo cdebootstrap -f minimal focal /mnt
+          sudo systemd-nspawn -D /mnt -- /usr/bin/apt-get -y update
+          sudo systemd-nspawn -D /mnt -- /usr/bin/apt-get -y install dracut dracut-config-generic linux-image-generic
+          sudo systemd-nspawn -D /mnt -- /usr/bin/apt-get -y install cloud-init openssh-server open-vm-tools
+          sudo systemd-nspawn -D /mnt -- /usr/bin/bootctl install
+          sudo umount /mnt/boot /mnt
+          sudo losetup -D
+      - name: Upload Image Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: kiwi-host.img
+          path: kiwi-host.img
