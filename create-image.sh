@@ -12,6 +12,10 @@ function sd-bootctl () {
     sd /usr/bin/bootctl "$@"
 }
 
+# komma seperated list of additional packages
+declare _bootstrap_pkgs='apt'
+declare -a _system_pkgs=('cloud-init' 'dracut' 'dracut-config-generic' 'linux-image-generic' 'openssh-server' 'open-vm-tools' 'systemd')
+
 fallocate -l 5GiB kiwi-host.img
 sgdisk -n 0:0:+512M -t 0:ef00 -c 0:KIWI_BOOT -n 0:0:0 -t 0:8304 -c KIWI_ROOT kiwi-host.img
 _loop_dev="$(sudo losetup --show -f -P kiwi-host.img)"
@@ -21,10 +25,13 @@ mkfs.xfs -L KIWI_ROOT "${_loop_dev}p2"
 mount "${_loop_dev}p1" /mnt
 mkdir /mnt/boot
 mount "${_loop_dev}p2" /mnt/boot
-cdebootstrap --allow-unauthenticated --verbose -f minimal focal /mnt https://mirror.genesisadaptive.com/ubuntu/
+cdebootstrap --allow-unauthenticated \
+    --verbose \
+    --include "$_bootstrap_pkgs" \
+    -f minimal \
+    focal /mnt https://mirror.genesisadaptive.com/ubuntu/
 sd-apt-get -y update
-sd-apt-get -y install dracut dracut-config-generic linux-image-generic
-sd-apt-get -y install cloud-init openssh-server open-vm-tools
+sd-apt-get -y install "${_system_pkgs[@]}"
 sd-bootctl install
 umount /mnt/boot /mnt
 losetup -D
