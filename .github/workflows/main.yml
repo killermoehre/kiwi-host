@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Install dependencies
-        run: sudo apt-get -y install cdebootstrap systemd-container
+        run: sudo apt-get -y install debootstrap systemd-container
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v2.3.2
       - name: Create Image

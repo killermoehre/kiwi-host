@@ -25,11 +25,10 @@ mkfs.xfs -L KIWI_ROOT "${_loop_dev}p2"
 mount "${_loop_dev}p1" /mnt
 mkdir /mnt/boot
 mount "${_loop_dev}p2" /mnt/boot
-cdebootstrap --allow-unauthenticated \
-    --verbose \
-    --include "$_bootstrap_pkgs" \
-    -f minimal \
-    focal /mnt https://mirror.genesisadaptive.com/ubuntu/
+debootstrap --variant=minbase \
+    --merged-usr \
+    --components=main,universe \
+    focal /mnt http://archive.ubuntu.com/ubuntu
 sd-apt-get -y update
 sd-apt-get -y install "${_system_pkgs[@]}"
 sd-bootctl install
