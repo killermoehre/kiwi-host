@@ -21,7 +21,7 @@ mkfs.xfs -L KIWI_ROOT "${_loop_dev}p2"
 mount "${_loop_dev}p1" /mnt
 mkdir /mnt/boot
 mount "${_loop_dev}p2" /mnt/boot
-cdebootstrap -f minimal focal /mnt
+cdebootstrap --verbose -f minimal focal /mnt https://releases.ubuntu.com/
 sd-apt-get -y update
 sd-apt-get -y install dracut dracut-config-generic linux-image-generic
 sd-apt-get -y install cloud-init openssh-server open-vm-tools
