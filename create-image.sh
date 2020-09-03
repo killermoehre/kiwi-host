@@ -27,7 +27,7 @@ mount "${_loop_dev}p2" /mnt/boot
 debootstrap --variant=minbase \
     --merged-usr \
     --components=main,universe \
-    focal /mnt http://archive.ubuntu.com/ubuntu
+    focal /mnt http://azure.archive.ubuntu.com/ubuntu
 sd-apt-get -y update
 sd-apt-get -y install "${_system_pkgs[@]}"
 sd-bootctl install
