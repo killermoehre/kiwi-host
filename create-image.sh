@@ -17,7 +17,7 @@ declare _bootstrap_pkgs='apt'
 declare -a _system_pkgs=('cloud-init' 'dracut' 'dracut-config-generic' 'linux-image-generic' 'openssh-server' 'open-vm-tools' 'systemd')
 
 fallocate -l 5GiB kiwi-host.img
-sgdisk -n 0:0:+512M -t 0:ef00 -c 0:KIWI_BOOT -n 0:0:0 -t 0:8304 -c KIWI_ROOT kiwi-host.img
+sgdisk -n 0:0:+256M -t 0:ef00 -c 0:KIWI_BOOT -n 0:0:0 -t 0:8304 -c KIWI_ROOT kiwi-host.img
 _loop_dev="$(sudo losetup --show -f -P kiwi-host.img)"
 partprobe -s "$_loop_dev"
 mkfs.vfat -F32 -n KIWI_BOOT "${_loop_dev}p1"
