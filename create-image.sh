@@ -13,8 +13,7 @@ function sd-bootctl () {
 }
 
 # komma seperated list of additional packages
-declare _bootstrap_pkgs='apt'
-declare -a _system_pkgs=('cloud-init' 'dracut' 'dracut-config-generic' 'linux-image-generic' 'openssh-server' 'open-vm-tools' 'systemd')
+declare -a _system_pkgs=('binutils' 'cloud-init' 'dbus' 'dracut' 'libpam-systemd' 'linux-generic' 'openssh-server' 'open-vm-tools' 'systemd')
 
 fallocate -l 5GiB kiwi-host.img
 sgdisk -n 0:0:+256M -t 0:ef00 -c 0:KIWI_BOOT -n 0:0:0 -t 0:8304 -c KIWI_ROOT kiwi-host.img
