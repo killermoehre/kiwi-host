@@ -10,6 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
+      - name: Update repolist
+        run : sudo apt-get update
       - name: Install dependencies
         run: sudo apt-get -y install debootstrap systemd-container
       - name: Checkout ${{ github.repository }}
