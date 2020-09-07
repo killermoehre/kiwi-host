@@ -35,6 +35,6 @@ debootstrap --variant=minbase \
     focal /mnt http://azure.archive.ubuntu.com/ubuntu
 sd-apt-get -y update
 sd-apt-get -y install "${_system_pkgs[@]}"
-sd-bootctl install
+sd-bootctl install --esp-path /boot
 umount /mnt/boot /mnt
 losetup -D
