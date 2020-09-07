@@ -13,7 +13,7 @@ function sd-apt-get () {
 }
 
 function sd-bootctl () {
-    sd /usr/bin/bootctl "$@"
+    "$_mnt_tmp_dir/usr/bin/bootctl" --boot-path="$_mnt_tmp_dir/boot" --esp-path="$_mnt_tmp_dir/boot" "$@"
 }
 
 # komma seperated list of additional packages
@@ -39,6 +39,6 @@ debootstrap --variant=minbase \
     focal /mnt http://azure.archive.ubuntu.com/ubuntu
 sd-apt-get -y update
 sd-apt-get -y install "${_system_pkgs[@]}"
-sd-bootctl install --esp-path /boot
+sd-bootctl install
 umount /mnt/boot /mnt
 losetup -D
