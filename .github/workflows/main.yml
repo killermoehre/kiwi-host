@@ -11,13 +11,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Update repolist
-        run: sudo apt-get update
+        run : sudo apt-get update
       - name: Install dependencies
         run: sudo apt-get -y install debootstrap systemd-container
       - name: Checkout ${{ github.repository }}
         uses: actions/checkout@v2.3.2
-      - name: Show mounts
-        run: cat /proc/self/mounts
       - name: Create Image
         run: sudo ./create-image.sh
       - name: Upload Image Artifact
