@@ -1,7 +1,11 @@
 #!/bin/bash
 
 function sd () {
-    systemd-nspawn -E "DEBIAN_FRONTEND=$DEBIAN_FRONTEND" -E "DEBCONF_NONINTERACTIVE_SEEN=$DEBCONF_NONINTERACTIVE_SEEN" -D /mnt -- "$@"
+    systemd-nspawn -E "DEBIAN_FRONTEND=$DEBIAN_FRONTEND" \
+                   -E "DEBCONF_NONINTERACTIVE_SEEN=$DEBCONF_NONINTERACTIVE_SEEN" \
+                   -D /mnt \
+                   --bind "$_mnt_tmp_dir/boot:/boot" \
+                   -- "$@"
 }
 
 function sd-apt-get () {
