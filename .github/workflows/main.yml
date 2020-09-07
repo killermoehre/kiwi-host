@@ -8,10 +8,13 @@ on:
 
 jobs:
   build:
+    env:
+      DEBIAN_FRONTEND: noninteractive
+      DEBCONF_NONINTERACTIVE_SEEN: true
     runs-on: ubuntu-20.04
     steps:
       - name: Update repolist
-        run : sudo apt-get update
+        run: sudo apt-get update
       - name: Install dependencies
         run: sudo apt-get -y install debootstrap systemd-container
       - name: Checkout ${{ github.repository }}

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function sd () {
-    systemd-nspawn -D /mnt -- "$@"
+    systemd-nspawn -E "DEBIAN_FRONTEND=$DEBIAN_FRONTEND" -E "DEBCONF_NONINTERACTIVE_SEEN=$DEBCONF_NONINTERACTIVE_SEEN" -D /mnt -- "$@"
 }
 
 function sd-apt-get () {
@@ -14,6 +14,8 @@ function sd-bootctl () {
 
 # komma seperated list of additional packages
 declare -a _system_pkgs=('binutils' 'cloud-init' 'dbus' 'dracut' 'libpam-systemd' 'linux-generic' 'openssh-server' 'open-vm-tools' 'systemd')
+declare -x -r DEBIAN_FRONTEND='noninteractive'
+declare -x -r DEBCONF_NONINTERACTIVE_SEEN='true'
 
 declare _mnt_tmp_dir
 _mnt_tmp_dir="$(mktemp -d)"
