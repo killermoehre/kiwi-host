@@ -41,7 +41,7 @@ echo "* Mounting ${_loop_dev}p2 to $_mnt_tmp_dir/boot"
 mkdir "$_mnt_tmp_dir/boot"
 mount -o defaults,exec,dev "${_loop_dev}p2" "$_mnt_tmp_dir/boot" || exit 1
 echo "* Starting debootstrap into $_mnt_tmp_dir"
-debootstrap --variant=minbase \
+fakechroot debootstrap --variant=fakechroot \
     --merged-usr \
     --components=main,universe \
     focal "$_mnt_tmp_dir" http://azure.archive.ubuntu.com/ubuntu
