@@ -36,10 +36,10 @@ mkfs.vfat -F32 -n KIWI_BOOT "${_loop_dev}p1" || exit 1
 echo "* Creating XFS on ${_loop_dev}p2"
 mkfs.xfs -L KIWI_ROOT "${_loop_dev}p2" || exit 1
 echo "* Mounting ${_loop_dev}p1 to $_mnt_tmp_dir"
-mount "${_loop_dev}p1" "$_mnt_tmp_dir" || exit 1
+mount -o defaults,exec,dev "${_loop_dev}p1" "$_mnt_tmp_dir" || exit 1
 echo "* Mounting ${_loop_dev}p2 to $_mnt_tmp_dir/boot"
 mkdir "$_mnt_tmp_dir/boot"
-mount "${_loop_dev}p2" "$_mnt_tmp_dir/boot" || exit 1
+mount -o defaults,exec,dev "${_loop_dev}p2" "$_mnt_tmp_dir/boot" || exit 1
 echo "* Starting debootstrap into $_mnt_tmp_dir"
 debootstrap --variant=minbase \
     --merged-usr \
