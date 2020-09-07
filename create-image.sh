@@ -3,8 +3,7 @@
 function sd () {
     systemd-nspawn -E "DEBIAN_FRONTEND=$DEBIAN_FRONTEND" \
                    -E "DEBCONF_NONINTERACTIVE_SEEN=$DEBCONF_NONINTERACTIVE_SEEN" \
-                   -D /mnt \
-                   --bind "$_mnt_tmp_dir/boot:/boot" \
+                   -D "$_mnt_tmp_dir" \
                    -- "$@"
 }
 
