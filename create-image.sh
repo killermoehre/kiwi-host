@@ -17,7 +17,7 @@ function sd-bootctl () {
 }
 
 # komma seperated list of additional packages
-declare -a _system_pkgs=('binutils' 'cloud-init' 'dbus' 'dracut' 'libpam-systemd' 'linux-generic' 'openssh-server' 'open-vm-tools' 'systemd')
+declare -a _system_pkgs=('apt' 'binutils' 'cloud-init' 'dbus' 'dracut' 'libpam-systemd' 'linux-generic' 'openssh-server' 'open-vm-tools' 'systemd' 'zypper')
 declare -x -r DEBIAN_FRONTEND='noninteractive'
 declare -x -r DEBCONF_NONINTERACTIVE_SEEN='true'
 
