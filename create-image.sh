@@ -40,10 +40,13 @@ echo "* Mounting ${_loop_dev}p2 to $_mnt_tmp_dir/boot"
 mkdir "$_mnt_tmp_dir/boot"
 mount -o defaults,exec,dev "${_loop_dev}p2" "$_mnt_tmp_dir/boot" || exit 1
 echo "* Preparing new root dir in $_mnt_tmp_dir"
-mkdir -p "$_mnt_tmp_dir"/{usr/lib,etc,var/cache,var/lib/dpkg,var/lib/apt/lists/partial,var/cache/apt/archives/partial}
+mkdir -p "$_mnt_tmp_dir"/{usr/lib,/usr/share,etc,var/cache,var/lib/dpkg,var/lib/apt/lists/partial,var/cache/apt/archives/partial}
 rsync -phaxPHAX /etc/apt "$_mnt_tmp_dir/etc/"
 rsync -phaxPHAX /usr/lib/apt "$_mnt_tmp_dir/usr/lib/"
+rsync -phaxPHAX /usr/share/dpkg "$_mnt_tmp_dir/usr/share/"
 touch "$_mnt_tmp_dir/var/lib/dpkg/status"
+echo "* Pre-Install Content of Image"
+find "$_mnt_tmp_dir"
 echo "* Update and Install Packages into Image"
 sd-apt-get -y update
 sd-apt-get -y install "${_system_pkgs[@]}"
