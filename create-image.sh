@@ -8,7 +8,7 @@ function sd () {
 }
 
 function sd-apt-get () {
-    sd /usr/bin/apt-get -y "$@"
+    /usr/bin/apt-get -y -o RootDir="$_mnt_tmp_dir" "$@"
 }
 
 function sd-bootctl () {
@@ -39,11 +39,10 @@ mount -o defaults,exec,dev "${_loop_dev}p1" "$_mnt_tmp_dir" || exit 1
 echo "* Mounting ${_loop_dev}p2 to $_mnt_tmp_dir/boot"
 mkdir "$_mnt_tmp_dir/boot"
 mount -o defaults,exec,dev "${_loop_dev}p2" "$_mnt_tmp_dir/boot" || exit 1
-echo "* Starting debootstrap into $_mnt_tmp_dir"
-fakechroot debootstrap --variant=fakechroot \
-    --merged-usr \
-    --components=main,universe \
-    focal "$_mnt_tmp_dir" http://azure.archive.ubuntu.com/ubuntu
+echo "* Preparing new root dir in $_mnt_tmp_dir"
+mkdir -p "$_mnt_tmp_dir"/{usr/lib,etc,var/cache,var/lib/dpkg,var/lib/apt/lists/partial,var/cache/apt/archives/partial}
+rsync -phaxPHAX /etc/apt /usr/lib/apt "$_mnt_tmp_dir"
+touch "$_mnt_tmp_dir/var/lib/dpkg/status"
 echo "* Update and Install Packages into Image"
 sd-apt-get -y update
 sd-apt-get -y install "${_system_pkgs[@]}"
