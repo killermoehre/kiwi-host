@@ -23,7 +23,7 @@ mkfs.vfat -F32 -n KIWI_BOOT "${_loop_dev}p1"
 mkfs.xfs -L KIWI_ROOT "${_loop_dev}p2"
 mount "${_loop_dev}p1" /mnt
 mkdir /mnt/boot
-mount -o rw,exec,dev,suid "${_loop_dev}p2" /mnt/boot
+mount "${_loop_dev}p2" /mnt/boot
 debootstrap --variant=minbase \
     --merged-usr \
     --components=main,universe \
