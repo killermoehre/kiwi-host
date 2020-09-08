@@ -1,0 +1,14 @@
+# vim: ft=dosini
+[Distribution]
+Distribution=ubuntu
+Release=focal
+Mirror=http://azure.archive.ubuntu.com/ubuntu
+
+[Output]
+Format=gpt_xfs
+Bootable=yes
+Output=kiwi-host.img
+
+[Packages]
+WithNetwork=true
+Packages=apt, cloud-init, openssh-server, open-vm-tools, systemd, zypper
