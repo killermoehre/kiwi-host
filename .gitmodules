@@ -1,0 +1,3 @@
+[submodule "librepo"]
+	path = librepo
+	url = https://github.com/rpm-software-management/librepo.git
