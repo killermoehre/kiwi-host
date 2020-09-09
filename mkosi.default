@@ -1,8 +1,6 @@
 # vim: ft=dosini
 [Distribution]
-Distribution=ubuntu
-Release=focal
-Mirror=http://azure.archive.ubuntu.com/ubuntu
+Distribution=archlinux
 
 [Output]
 Format=gpt_xfs
@@ -11,5 +9,5 @@ Output=kiwi-host.img
 
 [Packages]
 WithNetwork=true
-Packages=apt, cloud-init, openssh-server, open-vm-tools, python3, systemd, zypper
-BuildPackages=cmake, gcc, libc6-dev, libcurl4-openssl-dev, libglib2.0-dev, libssl-dev, libxml2-dev, make, meson, ninja-build, pkg-config
+Packages=cloud-init, debian-archive-keyring, debootstrap, dosfstools, openssh, open-vm-tools, python, systemd, ubuntu-keyring
+BuildPackages=base-devel, git, go, sudo
