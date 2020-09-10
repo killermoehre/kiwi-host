@@ -1,0 +1,11 @@
+#!/bin/bash
+# vim: ft=bash
+
+set -x
+set -euo pipefail
+
+pacman --noconfirm -S /yay*
+
+useradd -m -G wheel abuild
+
+sudo -u abuild -E -- yay --noconfirm -S zypper dnf python-kiwi

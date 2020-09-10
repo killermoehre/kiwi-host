@@ -4,31 +4,11 @@
 set -x
 set -euo pipefail
 
-echo "* Install Desitination is $DESTDIR"
+echo "* Install Destination is $DESTDIR"
+echo "* Creating a build user"
+useradd -m -G wheel abuild
 
-pushd librepo || exit 1
-mkdir build
-cd build
-cmake -DPYTHON_DESIRED="3" ..
-make
-popd || exit 1
-
-pushd libmodulemd || exit 1
-meson builddir
-cd builddir
-ninja
-popd || exit 1
-
-pushd libdnf || exit 1
-mkdir build
-cd build
-cmake -DPYTHON_DESIRED="3" ..
-make
-popd || exit 1
-
-pushd dnf || exit 1
-mkdir build
-cd build
-cmake -DPYTHON_DESIRED="3" ..
-make
-popd || exit 1
+declare -r -x PKGDEST="$DESTDIR"
+pushd "$SRCDIR/yay"
+sudo -u abuild -E -- makepkg
+popd
