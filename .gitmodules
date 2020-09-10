@@ -13,3 +13,7 @@
 [submodule "pacman"]
 	path = pacman
 	url = https://git.archlinux.org/pacman.git
+[submodule "yay"]
+	path = yay
+	url = https://aur.archlinux.org/yay.git
+	branch = master
