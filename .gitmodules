@@ -5,3 +5,7 @@
 	path = yay
 	url = https://aur.archlinux.org/yay.git
 	branch = master
+[submodule "archlinux-keyring"]
+	path = archlinux-keyring
+	url = https://git.archlinux.org/archlinux-keyring.git
+	branch = master
