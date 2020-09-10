@@ -8,7 +8,9 @@ echo "* Install Destination is $DESTDIR"
 echo "* Creating a build user"
 useradd -m -G wheel abuild
 
-declare -r -x PKGDEST="$DESTDIR"
 pushd "$SRCDIR/yay"
-sudo -u abuild -E -- makepkg
+echo "* Building yay"
+sudo -u abuild -E -- makepkg --force
+ls -la
+install yay*.pkg.tar.zst "$DESTDIR/"
 popd
