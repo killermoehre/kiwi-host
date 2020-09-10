@@ -17,7 +17,7 @@ jobs:
       - name: Update repolist
         run: sudo apt-get update
       - name: Install dependencies
-        run: sudo apt-get -y install systemd-container
+        run: sudo apt-get -y install systemd-container libarchive-dev libcurl4-openssl-dev libgpgme-dev meson ninja-build
       - name: Setting up python
         uses: actions/setup-python@v2
         with:
@@ -34,18 +34,30 @@ jobs:
       - name: Build pacman
         working-directory: pacman
         run: |
-          ./configure --prefix=/usr \
-                      --sysconfdir=/etc \
-                      --localstatedir=/var \
-                      --with-scriptlet-shell=/usr/bin/bash \
-                      --with-ldconfig=/usr/bin/ldconfig
-          make V=1
+          mkdir build
+          cd build
+          meson --prefix=/usr \
+                --buildtype=plain \
+                -Ddoc=disabled \
+                -Duse-git-version=true \
+                -Dscriptlet-shell=/usr/bin/bash \
+                -Dldconfig=/usr/bin/ldconfig \
+          ..
+          ninja
       - name: Install pacman
         working-directory: pacman
         run: |
-          sudo make install
-          sudo install -m644 pacman.conf /etc
+          pushd build
+          sudo ninja install
+          popd
+          wget -O makepkg.conf 'https://aur.archlinux.org/cgit/aur.git/plain/makepkg.conf?h=pacman-git'
+          wget -O pacman.conf.x86_64 'https://aur.archlinux.org/cgit/aur.git/plain/pacman.conf.x86_64?h=pacman-git'
+          sudo install -m644 pacman.conf.x86_64 /etc/pacman.conf
           sudo install -m644 makepkg.conf /etc
+          sudo sed -i /etc/makepkg.conf \
+                   -e "s|@CARCH[@]|x86_64|g" \
+                   -e "s|@CHOST[@]|x86_64-pc-linux-gnu|g" \
+                   -e "s|@CARCHFLAGS[@]|-march=x86-64|g"
       - name: Create Image
         run: sudo "$(type -P mkosi)"
       - name: Upload Image Artifact
