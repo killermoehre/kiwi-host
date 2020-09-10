@@ -8,6 +8,7 @@ Bootable=yes
 Output=kiwi-host.img
 
 [Packages]
+BuildScript=mkosi.build
 WithNetwork=true
 Packages=cloud-init, debian-archive-keyring, debootstrap, dosfstools, openssh, open-vm-tools, python, systemd, ubuntu-keyring
 BuildPackages=base-devel, git, go, sudo
