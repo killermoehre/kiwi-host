@@ -1,6 +1,6 @@
 # vim: ft=dosini
 [Distribution]
-Distribution=archlinux
+Distribution=arch
 
 [Output]
 Format=gpt_xfs
