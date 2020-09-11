@@ -4,8 +4,12 @@
 set -x
 set -euo pipefail
 
-pacman --noconfirm -S /yay*
+if [[ "$1" == 'build' ]]; then
+    exit 0
+fi
+
 
 useradd -m -G wheel abuild
 
+pacman --noconfirm -S /yay*
 sudo -u abuild -E -- yay --noconfirm -S zypper dnf python-kiwi

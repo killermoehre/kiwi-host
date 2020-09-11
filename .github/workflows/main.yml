@@ -61,8 +61,10 @@ jobs:
                    -e "s|@CARCH[@]|x86_64|g" \
                    -e "s|@CHOST[@]|x86_64-pc-linux-gnu|g" \
                    -e "s|@CARCHFLAGS[@]|-march=x86-64|g"
+      - name: Show mkosi options
+        run: mkosi show
       - name: Create Image
-        run: sudo "$(type -P mkosi)"
+        run: sudo "$(type -P mkosi)" build
       - name: Upload Image Artifact
         uses: actions/upload-artifact@v2
         with:
