@@ -9,9 +9,12 @@ echo "* Creating a build user"
 useradd -m -G wheel abuild
 
 echo "* Building yay"
-find . -print -exec chown abuild {} \;
-pushd "$SRCDIR/yay"
-sudo -u abuild -- makepkg --force
-ls -la
-install -m 0644 -o root yay*.pkg.tar.zst "$DESTDIR/"
-popd
+declare -a _build_env
+for dir in pkgdest srcdest srcpkgdest builddir; do
+    declare _tmp_name="_mkosi_${dir}"
+    declare -x "$_tmp_name"="$(sudo -u abuild mktemp -d)"
+    build_env+=( "${dir^^}="${!_tmp_name} )
+done
+
+sudo -u abuild -- env "${build_env[@]}" makepkg
+install -m 0644 -o root "${_mkosi_pkgdest}/"yay*.pkg.tar.zst "$DESTDIR/"
