@@ -62,7 +62,12 @@ jobs:
                    -e "s|@CHOST[@]|x86_64-pc-linux-gnu|g" \
                    -e "s|@CARCHFLAGS[@]|-march=x86-64|g"
       - name: Show mkosi options
-        run: mkosi show
+        run: mkosi summary > mkosi-summary.txt
+      - name: Upload mkosi Summary Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: mkosi-summary.txt
+          path: mkosi-summary.txt
       - name: Create Image
         run: sudo "$(type -P mkosi)" build
       - name: Upload Image Artifact
