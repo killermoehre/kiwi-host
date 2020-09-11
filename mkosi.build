@@ -17,6 +17,6 @@ for dir in pkgdest srcdest srcpkgdest builddir; do
 done
 
 pushd yay || exit 1
-sudo -u abuild -- env "${build_env[@]}" makepkg
+sudo -s -u abuild -- env "${build_env[@]}" makepkg
 popd yay || exit 1
 install -m 0644 -o root "${_mkosi_pkgdest}/"yay*.pkg.tar.zst "$DESTDIR/"
