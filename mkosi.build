@@ -15,6 +15,8 @@ for dir in pkgdest srcdest srcpkgdest builddir; do
     declare -x "$_tmp_name"="$(sudo -u abuild mktemp -d)"
     build_env+=( "${dir^^}="${!_tmp_name} )
 done
-
+chmod 0755 /root
+chmod 0755 /root/src
+chmod 0755 /root/src/yay
 sudo -u abuild -- env --chdir "$SRCDIR/yay" "${build_env[@]}" makepkg
 install -m 0644 -o root "${_mkosi_pkgdest}/"yay*.pkg.tar.zst "$DESTDIR/"
