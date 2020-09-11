@@ -11,5 +11,5 @@ fi
 
 useradd -m -G wheel abuild
 
-pacman --noconfirm -S /yay*
+pacman --noconfirm -U /yay*
 sudo -u abuild -E -- yay --noconfirm -S zypper dnf python-kiwi
