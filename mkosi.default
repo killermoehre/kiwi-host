@@ -6,9 +6,9 @@ Distribution=arch
 Format=gpt_xfs
 Bootable=yes
 Output=kiwi-host.img
+RootSize=5G
 
 [Packages]
 BuildScript=mkosi.build
 WithNetwork=true
-Packages=cloud-init, debian-archive-keyring, debootstrap, dosfstools, git, openssh, open-vm-tools, perl-error, perl-mailtools, perl-timedate, python, systemd, ubuntu-keyring, pacman-mirrorlist
-BuildPackages=base-devel, git, go, sudo
+Packages=cloud-init, debian-archive-keyring, debootstrap, dosfstools, git, openssh, open-vm-tools, perl-error, perl-mailtools, perl-timedate, python, systemd, ubuntu-keyring, pacman-mirrorlist, base-devel, git, go, sudo
