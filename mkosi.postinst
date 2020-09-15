@@ -13,7 +13,7 @@ useradd -m -G wheel abuild
 
 pacman --noconfirm -U --noprogressbar /yay*
 sudo -u abuild -- yay --noconfirm -Syu --noprogressbar
-sudo -u abuild -- yay --noconfirm -S --noprogressbar base-devel
+sudo -u abuild -- yay --noconfirm -S --noprogressbar base-devel asciidoctor
 sudo -u abuild -- yay --noconfirm -S --noprogressbar zypper dnf python-kiwi
 userdel --force --remove abuild
 getent group abuild && groupdel abuild
