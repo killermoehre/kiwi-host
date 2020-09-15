@@ -1,15 +1,14 @@
 # vim: ft=dosini
 [Distribution]
-Distribution=ubuntu
-Release=focal
-Mirror=http://azure.archive.ubuntu.com/ubuntu
+Distribution=arch
 
 [Output]
 Format=gpt_xfs
 Bootable=yes
 Output=kiwi-host.img
+RootSize=5G
 
 [Packages]
+BuildScript=mkosi.build
 WithNetwork=true
-Packages=apt, cloud-init, openssh-server, open-vm-tools, python3, systemd, zypper
-BuildPackages=cmake, gcc, libc6-dev, libcurl4-openssl-dev, libglib2.0-dev, libssl-dev, libxml2-dev, make, meson, ninja-build, pkg-config
+Packages=cloud-init, debian-archive-keyring, debootstrap, dosfstools, git, openssh, open-vm-tools, perl-error, perl-mailtools, perl-timedate, python, systemd, ubuntu-keyring, pacman-mirrorlist, base-devel, git, go, sudo

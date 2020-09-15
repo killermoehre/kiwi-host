@@ -4,31 +4,18 @@
 set -x
 set -euo pipefail
 
-echo "* Install Desitination is $DESTDIR"
+echo "* Install Destination is $DESTDIR"
+echo "* Creating a build user"
+useradd -m -G wheel abuild
 
-pushd librepo || exit 1
-mkdir build
-cd build
-cmake -DPYTHON_DESIRED="3" ..
-make
-popd || exit 1
-
-pushd libmodulemd || exit 1
-meson builddir
-cd builddir
-ninja
-popd || exit 1
-
-pushd libdnf || exit 1
-mkdir build
-cd build
-cmake -DPYTHON_DESIRED="3" ..
-make
-popd || exit 1
-
-pushd dnf || exit 1
-mkdir build
-cd build
-cmake -DPYTHON_DESIRED="3" ..
-make
-popd || exit 1
+echo "* Building yay"
+declare -a _build_env
+for dir in pkgdest srcdest srcpkgdest builddir; do
+    declare _tmp_name="_mkosi_${dir}"
+    declare -x "$_tmp_name"="$(sudo -u abuild mktemp -d)"
+    build_env+=( "${dir^^}="${!_tmp_name} )
+done
+cp -r /root/src/yay ~abuild
+chown -R abuild ~abuild/yay
+sudo -u abuild -- env --chdir ~abuild/yay "${build_env[@]}" makepkg
+install -m 0644 -o root "${_mkosi_pkgdest}/"yay*.pkg.tar.zst "$DESTDIR/"

@@ -1,0 +1,19 @@
+#!/bin/bash
+# vim: ft=bash
+
+set -x
+set -euo pipefail
+
+if [[ "$1" == 'build' ]]; then
+    exit 0
+fi
+
+
+useradd -m -G wheel abuild
+
+pacman --noconfirm -U --noprogressbar /yay*
+sudo -u abuild -- yay --noconfirm -Syu --noprogressbar
+sudo -u abuild -- yay --noconfirm -S --noprogressbar base-devel asciidoctor
+sudo -u abuild -- yay --noconfirm -S --noprogressbar zypper-git dnf python-kiwi
+userdel --force --remove abuild
+getent group abuild && groupdel abuild
