@@ -12,6 +12,7 @@ fi
 useradd -m -G wheel abuild
 
 pacman --noconfirm -U /yay*
+sudo -u abuild -- yay --noconfirm -Syu
 sudo -u abuild -- yay --noconfirm -S zypper dnf python-kiwi
 userdel --force --remove abuild
 getent group abuild && groupdel abuild

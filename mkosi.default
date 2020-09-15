@@ -10,5 +10,5 @@ Output=kiwi-host.img
 [Packages]
 BuildScript=mkosi.build
 WithNetwork=true
-Packages=cloud-init, debian-archive-keyring, debootstrap, dosfstools, git, openssh, open-vm-tools, perl-error, perl-mailtools, perl-timedate, python, systemd, ubuntu-keyring
-BuildPackages=base-devel, git, go, sudo, pacman-mirrorlist
+Packages=cloud-init, debian-archive-keyring, debootstrap, dosfstools, git, openssh, open-vm-tools, perl-error, perl-mailtools, perl-timedate, python, systemd, ubuntu-keyring, pacman-mirrorlist
+BuildPackages=base-devel, git, go, sudo
